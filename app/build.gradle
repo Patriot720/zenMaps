@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android-extensions'
 
@@ -33,4 +34,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.google.android.gms:play-services-location:11.0.1'//for location
     compile 'com.google.android.gms:play-services-maps:11.0.1'//for maps
+    compile 'com.sothree.slidinguppanel:library:3.4.0'
+    compile 'com.beardedhen:androidbootstrap:2.3.2'
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    kapt "android.arch.persistence.room:compiler:1.0.0"
 }

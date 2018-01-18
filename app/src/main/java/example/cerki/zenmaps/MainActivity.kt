@@ -2,30 +2,37 @@ package example.cerki.zenmaps
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
+import android.support.v4.widget.SlidingPaneLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import example.cerki.zenmaps.Database.POJO.CarMarker
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.maps_slidingup_panel.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         val map = googleMap ?:return
         val zen = LatLng(55.677742, 37.531344)
-        val bitmap = BitmapDescriptorFactory.fromResource(R.drawable.zenna)
-        map.addMarker(MarkerOptions().position(zen).title("Kappa").icon(bitmap))
+        val carMarker = CarMarker(15, "solaris", "solaris.png")
+        val bitmap = BitmapDescriptorFactory.fromBitmap(carMarker.getIcon(this))
+        val marker = map.addMarker(MarkerOptions().position(zen).title("Kappa").icon(bitmap))
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(zen,20f))
     }
 
@@ -38,6 +45,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+        fab.hide()
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -45,6 +53,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        sliding_panel.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener{
+            override fun onPanelSlide(panel: View?, slideOffset: Float) {
+                val layoutParams = button2.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.verticalBias = slideOffset
+                button2.layoutParams = layoutParams
+                val displayMetrics = DisplayMetrics()
+                windowManager.defaultDisplay.getMetrics(displayMetrics)
+                button2.width = (displayMetrics.widthPixels * slideOffset).toInt()
+            }
+
+
+            override fun onPanelStateChanged(panel: View?, previousState: SlidingUpPanelLayout.PanelState?, newState: SlidingUpPanelLayout.PanelState?) {
+            }
+
+        })
 
         val fragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         fragment.getMapAsync(this)

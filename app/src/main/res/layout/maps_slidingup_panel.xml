@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="-25dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFF"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="center|top">
+
+        <com.beardedhen.androidbootstrap.AwesomeTextView
+            android:id="@+id/awesomeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="58dp"
+            android:layout_marginTop="8dp"
+            android:textSize="30sp"
+            app:bootstrapBrand="info"
+            app:bootstrapText="Kayoto Korolla"
+            app:fontAwesomeIcon="fa_android"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/awesomeTextView"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+        android:id="@+id/bootstrapCircleThumbnail"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="top"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/zen"
+        app:hasBorder="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</FrameLayout>
